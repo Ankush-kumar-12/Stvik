@@ -1,2 +1,2 @@
-# Stvik
+# Styvik
 My first startup platform 
