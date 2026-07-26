@@ -1,2 +1,1 @@
-# Styvik
-My first startup platform 
+Coming soon 
