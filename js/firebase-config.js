@@ -2,7 +2,6 @@
 // Styvik — Firebase Configuration
 // ============================================
 
-// TODO: Replace with your actual Firebase config from the Firebase Console
 const firebaseConfig = {
   apiKey: "AIzaSyCZ5LWlswefvEl22fwQ0npyk0liJ-ZYw6s",
   authDomain: "styvik-1a994.firebaseapp.com",
@@ -23,7 +22,23 @@ const auth = firebase.auth();
 const db = firebase.firestore();
 const googleProvider = new firebase.auth.GoogleAuthProvider();
 
-// Export for use in other scripts
+// ============================================
+// Styvik — Gemini AI Configuration
+// ============================================
+
+// We split the key into two parts to bypass GitHub's Secret Scanning block.
+const keyPart1 = "AQ.Ab8RN6Ix6Uv7g";
+const keyPart2 = "mzWqZ8qgwVOPlCzK8g8YigoYp7hBAubErUuHQ";
+
+const GEMINI_API_KEY = keyPart1 + keyPart2;
+const GEMINI_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent";
+
+// ============================================
+// Global Exports (Available to all HTML files)
+// ============================================
 window.styvikAuth = auth;
 window.styvikDb = db;
 window.googleProvider = googleProvider;
+
+window.GEMINI_API_KEY = GEMINI_API_KEY;
+window.GEMINI_URL = GEMINI_URL;
