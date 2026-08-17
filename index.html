@@ -161,6 +161,10 @@
     .social-btn.tg:hover { background: #229ED9; border-color: #229ED9; }
     .footer-bottom { border-top: var(--border-width) dashed var(--border-dark); padding-top: 20px; text-align: center; font-weight: 600; font-size: 0.8rem; color: var(--text-secondary); }
 
+    /* Toast */
+    .toast { position: fixed; top: 24px; left: 50%; transform: translateX(-50%) translateY(-100px); background: var(--surface); border: var(--border-width) solid var(--border-dark); color: var(--text); padding: 14px 24px; border-radius: var(--radius-full); font-size: 0.95rem; font-weight: 600; z-index: 9999; transition: var(--transition-smooth); opacity: 0; visibility: hidden;}
+    .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; visibility: visible;}
+
     @media(max-width: 900px) {
       .top-header { height: 65px; border-radius: 0; }
       .search-bar-desktop { display: flex; width: 100%; justify-content: flex-end;}
@@ -173,7 +177,7 @@
     }
 
     /* =========================================
-       SOYA AI - CHARACTER BOT, SHADOW & ANIMATIONS
+       SOYA AI - CHARACTER BOT & NEW ANIMATIONS
        ========================================= */
     .soya-bot-container { position: fixed; bottom: 85px; right: 24px; z-index: 10001; display: flex; flex-direction: column; align-items: center; touch-action: none; transition: bottom 0.3s ease; }
     
@@ -330,6 +334,7 @@
         .soya-gradient-chat-box { border-top-left-radius: 0; border-top-right-radius: 0; padding: 24px; }
     }
   </style>
+
 </head>
 <body class="user-logged-out">
 
@@ -505,13 +510,37 @@
 
   <div class="toast" id="toast">Copied to clipboard</div>
 
-  <!-- FIREBASE (Existing Base) -->
+  <!-- FIREBASE SCRIPTS (NEW DATABASE INITIALIZATION INCLUDED) -->
   <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore-compat.js"></script>
-  <script src="js/firebase-config.js"></script>
 
   <script>
+    // =======================================
+    // INITIALIZE NEW FIREBASE SDK (styvik-4)
+    // =======================================
+    const firebaseConfig = {
+      apiKey: "AIzaSyCBGOFSfFbk8oVC7LMLql7VkkwrfVXjJQ4",
+      authDomain: "styvik-4.firebaseapp.com",
+      projectId: "styvik-4",
+      storageBucket: "styvik-4.firebasestorage.app",
+      messagingSenderId: "877615452108",
+      appId: "1:877615452108:web:cab75a7f24ac5b559a1769",
+      measurementId: "G-SG98PY367W"
+    };
+    
+    if (!firebase.apps.length) {
+        firebase.initializeApp(firebaseConfig);
+    }
+    
+    window.styvikDb = firebase.firestore();
+
+    const toastEl = document.getElementById('toast');
+    function showToast(msg) {
+        toastEl.textContent = msg;
+        toastEl.classList.add('show');
+        setTimeout(() => toastEl.classList.remove('show'), 3000);
+    }
+
     // =======================================
     // FIREBASE FETCH FOR BLOGS
     // =======================================
@@ -520,10 +549,7 @@
         if (!grid) return;
         
         try {
-            if (!window.styvikDb) {
-                // Wait for interval
-                return;
-            }
+            if (!window.styvikDb) return; 
             
             const snapshot = await window.styvikDb.collection('blogs').orderBy('createdAt', 'desc').limit(20).get();
 
@@ -595,10 +621,6 @@
         const dbCheck = setInterval(() => {
             if (window.styvikDb) {
                 clearInterval(dbCheck);
-                loadLiveBlogs();
-            } else if (typeof firebase !== 'undefined' && firebase.apps && firebase.apps.length > 0) {
-                clearInterval(dbCheck);
-                window.styvikDb = firebase.firestore();
                 loadLiveBlogs();
             } else if (dbCheckCount > 50) { 
                 clearInterval(dbCheck);
