@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>Styvik Journal | Reading Article</title>
+  <title>Styvik Journal | Fashion Blogs & Articles</title>
   
   <link rel="icon" type="image/png" href="images/favicon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -19,6 +19,9 @@
   </script>
 
   <style>
+    /* ====================================
+       STYVIK CORE VARIABLES
+       ==================================== */
     :root {
       --primary: #2563eb;      
       --accent: #f97316;       
@@ -28,6 +31,10 @@
       --text-secondary: #475569;
       --border-dark: #000000;
       --border-width: 1px; 
+      --success-bg: #ecfdf5;
+      --success-text: #047857;
+      --success-border: #10b981;
+      --error: #dc2626;
       --radius-sm: 12px;
       --radius: 20px;
       --radius-full: 99px;
@@ -40,87 +47,239 @@
     * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent;}
     html, body { max-width: 100vw; overflow-x: hidden; scroll-behavior: smooth; }
     
-    body { font-family: var(--font-main); background-color: var(--bg); color: var(--text); line-height: 1.7; padding-top: 90px; padding-bottom: 60px; }
+    body { font-family: var(--font-main); background-color: var(--bg); color: var(--text); line-height: 1.6; padding-top: 90px; padding-bottom: 60px; }
     
-    .container { max-width: 860px; margin: 0 auto; padding: 0 20px; width: 100%; box-sizing: border-box; }
+    .container { max-width: 1240px; margin: 0 auto; padding: 0 20px; width: 100%; box-sizing: border-box; }
     a { text-decoration: none; color: inherit; }
 
-    /* HEADER */
-    .top-header { position: fixed; top: 0; left: 0; right: 0; height: 70px; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(12px); border-bottom: var(--border-width) solid var(--border-dark); z-index: 1001; display: flex; align-items: center; }
+    /* =========================================
+       HEADER (SEARCH & LOGO ONLY)
+       ========================================= */
+    .top-header { position: fixed; top: 0; left: 0; right: 0; height: 70px; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(12px); border-bottom: var(--border-width) solid var(--border-dark); z-index: 1001; display: flex; align-items: center; transition: top 0.3s ease; }
     .header-inner { display: flex; justify-content: space-between; align-items: center; width: 100%; height: 100%; max-width: 1240px; margin: 0 auto; padding: 0 20px; gap: 16px; }
+    .site-logo { height: 22px; width: auto; display: block; transition: var(--transition-fast); }
+    .site-logo:hover { opacity: 0.8; }
     
-    /* BACK BUTTON */
-    .back-btn { display: inline-flex; align-items: center; gap: 10px; font-weight: 700; color: var(--text); padding: 8px 16px; border-radius: var(--radius-full); border: var(--border-width) solid var(--border-dark); background: var(--surface); transition: var(--transition-fast); cursor: pointer; text-decoration: none; }
-    .back-btn:hover { background: var(--bg); transform: translateX(-3px); }
-    .back-btn svg { width: 18px; height: 18px; stroke-width: 2.2; }
-
-    .site-logo { height: 20px; width: auto; display: block; }
+    .search-bar-desktop { flex: 1; max-width: 600px; display: flex; align-items: center; justify-content: flex-end;}
+    .search-input-wrapper { position: relative; width: 100%; max-width: 400px; }
+    .search-bar-input { width: 100%; padding: 10px 16px 10px 42px; border: var(--border-width) solid var(--border-dark); border-radius: var(--radius-full); font-family: var(--font-main); font-size: 0.95rem; font-weight: 500; background: var(--bg); transition: var(--transition-fast); outline: none; }
+    .search-bar-input:focus { border-color: var(--primary); background: var(--surface); }
+    .search-bar-icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); width: 18px; color: var(--text); stroke-width: 2; pointer-events: none;}
     
-    .search-bar-desktop { flex: 1; max-width: 420px; display: flex; align-items: center; justify-content: flex-end;}
-    .search-input-wrapper { position: relative; width: 100%; }
-    .search-bar-input { width: 100%; padding: 8px 16px 8px 38px; border: var(--border-width) solid var(--border-dark); border-radius: var(--radius-full); font-family: var(--font-main); font-size: 0.9rem; font-weight: 500; background: var(--bg); outline: none; }
-    .search-bar-icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); width: 16px; color: var(--text); stroke-width: 2; pointer-events: none;}
+    /* =========================================
+       GLOBAL ANIMATIONS
+       ========================================= */
+    @keyframes fadeUp {
+        from { opacity: 0; transform: translateY(40px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fade-up { animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) both; }
+
+    /* =========================================
+       BLOG PAGE SPECIFIC UI
+       ========================================= */
+    .blog-header { text-align: center; margin: 20px 0 60px 0; }
+    .blog-hero-overline { font-size: 0.8rem; font-weight: 700; letter-spacing: 0.1em; color: var(--primary); text-transform: uppercase; margin-bottom: 16px; display: inline-block; border: var(--border-width) solid var(--primary); padding: 4px 14px; border-radius: 99px;}
+    .blog-title { font-family: var(--font-serif); font-size: 4rem; font-weight: 600; line-height: 1.1; margin-bottom: 24px; color: var(--text); letter-spacing: -0.02em; }
+    .blog-title em { font-style: italic; color: var(--accent); } 
+    .blog-subtitle { font-size: 1.1rem; font-weight: 500; max-width: 600px; margin: 0 auto 48px auto; color: var(--text-secondary); }
+
+    .blog-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 30px; margin-bottom: 60px; }
     
-    /* ARTICLE CONTENT */
-    .article-hero-img { width: 100%; max-height: 480px; object-fit: cover; border-radius: 20px; border: var(--border-width) solid var(--border-dark); margin: 20px 0 32px 0; background: #e2e8f0; }
-    .article-meta-badge { display: inline-flex; align-items: center; gap: 12px; margin-bottom: 20px; font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; }
-    .article-category { background: var(--surface); padding: 4px 12px; border-radius: 99px; border: var(--border-width) solid var(--border-dark); color: var(--primary); }
-    .article-date { color: var(--text-secondary); }
-
-    .article-title { font-family: var(--font-serif); font-size: 3rem; font-weight: 700; line-height: 1.2; margin-bottom: 24px; color: var(--text); letter-spacing: -0.02em; }
+    .blog-card { background: var(--surface); border: var(--border-width) solid var(--border-dark); border-radius: 20px; overflow: hidden; transition: var(--transition-smooth); display: flex; flex-direction: column; cursor: pointer; text-decoration: none; color: inherit; opacity: 0; animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;}
+    .blog-card:hover { transform: translateY(-8px); box-shadow: 0 12px 30px rgba(0,0,0,0.08); border-color: var(--primary); }
     
-    .author-card { display: flex; align-items: center; gap: 12px; padding: 16px 0; border-top: var(--border-width) solid #e2e8f0; border-bottom: var(--border-width) solid #e2e8f0; margin-bottom: 40px; }
-    .author-avatar { width: 44px; height: 44px; border-radius: 50%; background: var(--text); color: white; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.1rem; }
-    .author-info h4 { font-size: 0.95rem; font-weight: 700; margin: 0; }
-    .author-info p { font-size: 0.8rem; color: var(--text-secondary); margin: 0; }
+    .blog-image { width: 100%; height: 240px; object-fit: cover; border-bottom: var(--border-width) solid var(--border-dark); transition: transform 0.5s ease;}
+    .blog-card:hover .blog-image { transform: scale(1.03); }
+    
+    .blog-content { padding: 24px; display: flex; flex-direction: column; flex: 1; position: relative; z-index: 2; background: var(--surface); }
+    .blog-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; font-size: 0.8rem; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em; }
+    .blog-category { background: var(--bg); padding: 4px 10px; border-radius: 99px; border: var(--border-width) solid var(--border-dark); color: var(--primary); }
+    
+    .blog-card-title { font-family: var(--font-serif); font-size: 1.5rem; font-weight: 700; margin-bottom: 12px; color: var(--text); line-height: 1.3; }
+    .blog-excerpt { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.6; flex: 1; margin-bottom: 20px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+    
+    .read-more-btn { align-self: flex-start; background: var(--text); color: white; padding: 10px 24px; border-radius: 99px; font-weight: 700; font-size: 0.9rem; transition: var(--transition-fast); border: var(--border-width) solid var(--border-dark); display: inline-flex; align-items: center; gap: 8px;}
+    .blog-card:hover .read-more-btn { background: var(--primary); border-color: var(--border-dark); }
 
-    .article-body { font-size: 1.15rem; line-height: 1.85; color: #1e293b; }
-    .article-body p { margin-bottom: 24px; }
-    .article-body h2, .article-body h3 { font-family: var(--font-serif); margin: 36px 0 16px 0; color: var(--text); }
-    .article-body img { width: 100%; border-radius: 12px; margin: 24px 0; border: var(--border-width) solid var(--border-dark); }
-
-    /* SKELETON */
-    .skeleton-box { background: linear-gradient(90deg, #e2e8f0 25%, #f1f5f9 50%, #e2e8f0 75%); background-size: 200% 100%; animation: fastShimmer 1.5s infinite linear; border-radius: 8px; }
+    /* Skeleton Loaders */
+    .blog-skeleton { animation: none; opacity: 1; }
+    .blog-skeleton .blog-image { background: linear-gradient(90deg, #e2e8f0 25%, #f1f5f9 50%, #e2e8f0 75%); background-size: 200% 100%; animation: fastShimmer 1.5s infinite linear; }
+    .blog-skeleton .blog-card-title, .blog-skeleton .blog-excerpt, .blog-skeleton .read-more-btn, .blog-skeleton .blog-category { background: linear-gradient(90deg, #e2e8f0 25%, #f1f5f9 50%, #e2e8f0 75%); background-size: 200% 100%; animation: fastShimmer 1.5s infinite linear; color: transparent !important; border-color: transparent !important; }
+    .blog-skeleton .blog-card-title { height: 28px; width: 80%; border-radius: 4px; margin-bottom: 12px;}
+    .blog-skeleton .blog-excerpt { height: 60px; width: 100%; border-radius: 4px;}
     @keyframes fastShimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
 
-    @media(max-width: 768px) {
-      .article-title { font-size: 2.2rem; }
-      .search-bar-desktop { display: none; }
+    /* Funny Error States */
+    .funny-error { text-align: center; grid-column: 1/-1; padding: 80px 20px; animation: fadeUp 0.6s ease; display: flex; flex-direction: column; align-items: center; gap: 16px;}
+    .funny-error span { font-size: 4rem; filter: drop-shadow(0 10px 15px rgba(0,0,0,0.1)); }
+    .funny-error h3 { font-family: var(--font-serif); font-size: 2.2rem; color: var(--text); margin: 0; line-height: 1.1; letter-spacing: -0.02em;}
+    .funny-error p { color: var(--text-secondary); font-size: 1.1rem; max-width: 400px; margin: 0;}
+    .retry-btn { margin-top: 16px; background: var(--text); color: white; padding: 12px 32px; border-radius: 99px; font-weight: 700; cursor: pointer; border: none; font-family: var(--font-main); transition: 0.2s; box-shadow: 0 4px 12px rgba(0,0,0,0.1);}
+    .retry-btn:hover { background: var(--primary); transform: translateY(-2px); }
+
+    /* =========================================
+       FOOTER
+       ========================================= */
+    .footer { border-top: var(--border-width) solid var(--border-dark); background: var(--surface); padding: 40px 0 20px 0; margin-top: 60px; }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 40px; margin-bottom: 32px; align-items: start;}
+    .footer-col-title { font-weight: 700; font-size: 1.05rem; margin-bottom: 16px; color: var(--text); text-transform: uppercase;}
+    .footer-links { display: flex; flex-direction: column; gap: 10px; }
+    .footer-links a { color: var(--text-secondary); font-weight: 500; font-size: 0.9rem; transition: var(--transition-fast); }
+    .footer-links a:hover { color: var(--accent); transform: translateX(4px);}
+    .newsletter-form { display: flex; gap: 8px; margin-top: 16px; width: 100%; max-width: 400px; }
+    .newsletter-input { flex: 1; padding: 10px 16px; border: var(--border-width) solid var(--border-dark); border-radius: var(--radius-full); font-weight: 500; font-family: var(--font-main); outline: none; background: var(--bg); transition: 0.2s;}
+    .newsletter-input:focus { border-color: var(--accent); background: var(--surface); }
+    .newsletter-btn { background: var(--text); color: white; border: var(--border-width) solid var(--border-dark); padding: 0 20px; border-radius: var(--radius-full); font-weight: 700; cursor: pointer; transition: 0.2s; white-space: nowrap;}
+    .newsletter-btn:hover { background: var(--accent); border-color: var(--accent); transform: translateY(-2px);}
+    .social-footer-row { display: flex; gap: 12px; margin-top: 24px; }
+    .social-btn { width: 44px; height: 44px; border-radius: 50%; border: var(--border-width) solid var(--border-dark); display: flex; align-items: center; justify-content: center; color: var(--text); background: var(--surface); transition: var(--transition-smooth); }
+    .social-btn svg { width: 20px; height: 20px; fill: currentColor; stroke-width: 1.5; }
+    .social-btn:not(.ig):not(.yt) svg { fill: currentColor; stroke: none; }
+    .social-btn.ig svg, .social-btn.yt svg { fill: none; stroke: currentColor; stroke-width: 2; }
+    .social-btn:hover { background: var(--accent); color: white; transform: translateY(-4px) scale(1.1); border-color: var(--accent); }
+    .social-btn.ig:hover { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); border-color: transparent;}
+    .social-btn.yt:hover { background: #ff0000; border-color: #ff0000; }
+    .social-btn.fb:hover { background: #1877F2; border-color: #1877F2; }
+    .social-btn.tg:hover { background: #229ED9; border-color: #229ED9; }
+    .footer-bottom { border-top: var(--border-width) dashed var(--border-dark); padding-top: 20px; text-align: center; font-weight: 600; font-size: 0.8rem; color: var(--text-secondary); }
+
+    /* Toast */
+    .toast { position: fixed; top: 24px; left: 50%; transform: translateX(-50%) translateY(-100px); background: var(--surface); border: var(--border-width) solid var(--border-dark); color: var(--text); padding: 14px 24px; border-radius: var(--radius-full); font-size: 0.95rem; font-weight: 600; z-index: 9999; transition: var(--transition-smooth); opacity: 0; visibility: hidden;}
+    .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; visibility: visible;}
+
+    @media(max-width: 900px) {
+      .top-header { height: 65px; border-radius: 0; }
+      .search-bar-desktop { display: flex; width: 100%; justify-content: flex-end;}
+      .search-input-wrapper { max-width: 100%; }
+      .blog-title { font-size: 3.2rem; }
+      .blog-grid { grid-template-columns: 1fr; gap: 20px;}
+      .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+      .funny-error span { font-size: 3rem; }
+      .funny-error h3 { font-size: 1.8rem; }
     }
   </style>
-</head>
-<body>
 
+</head>
+<body class="user-logged-out">
+
+  <!-- ==========================================
+       TOP HEADER (SEARCH & LOGO ONLY)
+       ========================================== -->
   <header class="top-header">
     <div class="header-inner">
-      <!-- HARDCODED DIRECT HOME/BLOG ROOT TARGET -->
-      <a href="https://styvik.in/" class="back-btn" aria-label="Go Back">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
-        <img src="images/logo.png" alt="Styvik" class="site-logo">
-      </a>
+      <div class="header-left">
+        <a href="index.html"><img src="images/logo.png" alt="Styvik" class="site-logo"></a>
+      </div>
       
       <div class="search-bar-desktop">
         <div class="search-input-wrapper">
           <svg class="search-bar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-          <input type="text" class="search-bar-input" placeholder="Search brands, styles, pieces..." autocomplete="off">
+          <input type="text" class="search-bar-input" id="desktopSearchInput" placeholder="Search brands, styles, pieces..." autocomplete="off">
         </div>
       </div>
     </div>
   </header>
 
+  <!-- =========================================
+       MAIN BLOG DISCOVERY SECTION
+       ========================================= -->
   <main class="container">
-    <div id="articleContainer">
-      <div class="skeleton-box" style="width: 100%; height: 380px; margin-top: 20px; border-radius: 20px;"></div>
-      <div class="skeleton-box" style="width: 140px; height: 26px; margin: 24px 0 16px 0; border-radius: 99px;"></div>
-      <div class="skeleton-box" style="width: 90%; height: 48px; margin-bottom: 24px;"></div>
-      <div class="skeleton-box" style="width: 100%; height: 160px;"></div>
+    <div class="blog-header animate-fade-up">
+      <span class="blog-hero-overline">Daily Inspiration</span>
+      <h1 class="blog-title">Styvik<br><em>Journal</em></h1>
+      <p class="blog-subtitle">Dive into the latest trends, designer stories, and independent fashion insights curated by our team.</p>
+    </div>
+
+    <!-- Blog Grid Content -->
+    <div class="blog-grid" id="blogGrid">
+      <!-- Skeletons loaded initially -->
+      <div class="blog-card blog-skeleton">
+        <div class="blog-image"></div>
+        <div class="blog-content">
+          <div class="blog-meta"><span class="blog-category">Category</span><span>Date</span></div>
+          <div class="blog-card-title"></div>
+          <div class="blog-excerpt"></div>
+          <div class="read-more-btn">Read Article</div>
+        </div>
+      </div>
+      <div class="blog-card blog-skeleton" style="animation-delay: 0.1s;">
+        <div class="blog-image"></div>
+        <div class="blog-content">
+          <div class="blog-meta"><span class="blog-category">Category</span><span>Date</span></div>
+          <div class="blog-card-title"></div>
+          <div class="blog-excerpt"></div>
+          <div class="read-more-btn">Read Article</div>
+        </div>
+      </div>
+      <div class="blog-card blog-skeleton" style="animation-delay: 0.2s;">
+        <div class="blog-image"></div>
+        <div class="blog-content">
+          <div class="blog-meta"><span class="blog-category">Category</span><span>Date</span></div>
+          <div class="blog-card-title"></div>
+          <div class="blog-excerpt"></div>
+          <div class="read-more-btn">Read Article</div>
+        </div>
+      </div>
     </div>
   </main>
 
+  <!-- ==========================================
+       FOOTER
+       ========================================== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <img src="images/logo.png" alt="Styvik" class="site-logo" style="margin-bottom: 12px;">
+          <p style="color: var(--text-secondary); font-weight: 500; font-size: 0.9rem;">Curating India's premier independent fashion brands into one structured directory.</p>
+          <form class="newsletter-form" id="newsletterForm">
+              <input type="email" class="newsletter-input" placeholder="Enter your email" required>
+              <button type="submit" class="newsletter-btn">Subscribe</button>
+          </form>
+          <div class="social-footer-row">
+              <a href="https://www.instagram.com/_styvik?igsh=NzZjYmJ4MzA4MXE%3D&utm_source=qr" target="_blank" class="social-btn ig" title="Instagram">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+              </a>
+              <a href="https://www.facebook.com/share/1EbDmZdwuL/?mibextid=wwXIfr" target="_blank" class="social-btn fb" title="Facebook">
+                  <svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.469h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.469h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+              </a>
+              <a href="https://youtube.com/@styvik-y9e?si=0QhAhcrT0GrSpbL9" target="_blank" class="social-btn yt" title="YouTube">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33 2.78 2.78 0 0 0 1.94 2c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.33 29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon></svg>
+              </a>
+              <a href="https://x.com/styvik?s=11" target="_blank" class="social-btn" title="X (Twitter)">
+                  <svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.008 4.075H5.059z"/></svg>
+              </a>
+          </div>
+        </div>
+        <div>
+          <h4 class="footer-col-title">Platform</h4>
+          <div class="footer-links">
+            <a href="index.html">Discovery Feed</a>
+            <a href="wishlist.html">Wishlist</a>
+          </div>
+        </div>
+        <div>
+          <h4 class="footer-col-title">Support</h4>
+          <div class="footer-links">
+            <a href="form-business-register.html">Brand Application</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">&copy; 2026 Styvik OS. All operations secured.</div>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast">Copied to clipboard</div>
+
+  <!-- FIREBASE SCRIPTS (NEW DATABASE INITIALIZATION INCLUDED) -->
   <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore-compat.js"></script>
 
   <script>
+    // =======================================
+    // INITIALIZE NEW FIREBASE SDK (styvik-4)
+    // =======================================
     const firebaseConfig = {
       apiKey: "AIzaSyCBGOFSfFbk8oVC7LMLql7VkkwrfVXjJQ4",
       authDomain: "styvik-4.firebaseapp.com",
@@ -132,62 +291,114 @@
     };
     
     if (!firebase.apps.length) {
-      firebase.initializeApp(firebaseConfig);
+        firebase.initializeApp(firebaseConfig);
     }
-    const db = firebase.firestore();
+    
+    window.styvikDb = firebase.firestore();
 
-    async function loadPost() {
-      const params = new URLSearchParams(window.location.search);
-      const docId = params.get('id');
-      const container = document.getElementById('articleContainer');
-
-      if (!docId) {
-        container.innerHTML = `<h2 style="text-align:center; margin-top:60px;">Article not found.</h2>`;
-        return;
-      }
-
-      try {
-        const doc = await db.collection('blogs').doc(docId).get();
-        if (!doc.exists) {
-          container.innerHTML = `<h2 style="text-align:center; margin-top:60px;">Article does not exist.</h2>`;
-          return;
-        }
-
-        const data = doc.data();
-        let dateStr = 'Recently';
-        if (data.createdAt && typeof data.createdAt.toMillis === 'function') {
-          dateStr = new Date(data.createdAt.toMillis()).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
-        }
-
-        const imgUrl = (data.images && data.images.length > 0) ? data.images[0] : (data.coverImage || '');
-
-        container.innerHTML = `
-          ${imgUrl ? `<img src="${imgUrl}" alt="${data.title || ''}" class="article-hero-img">` : ''}
-          <div class="article-meta-badge">
-            <span class="article-category">${data.category || 'Editorial'}</span>
-            <span class="article-date">${dateStr}</span>
-          </div>
-          <h1 class="article-title">${data.title || 'Untitled Article'}</h1>
-          
-          <div class="author-card">
-            <div class="author-avatar">${(data.author || 'S').charAt(0).toUpperCase()}</div>
-            <div class="author-info">
-              <h4>${data.author || 'Styvik Admin'}</h4>
-              <p>Fashion Editor</p>
-            </div>
-          </div>
-
-          <div class="article-body">
-            ${data.content || data.body || (data.description ? `<p>${data.description}</p>` : '<p>No content available.</p>')}
-          </div>
-        `;
-      } catch (err) {
-        console.error(err);
-        container.innerHTML = `<h2 style="text-align:center; margin-top:60px;">Failed to load article.</h2>`;
-      }
+    const toastEl = document.getElementById('toast');
+    function showToast(msg) {
+        toastEl.textContent = msg;
+        toastEl.classList.add('show');
+        setTimeout(() => toastEl.classList.remove('show'), 3000);
     }
 
-    document.addEventListener('DOMContentLoaded', loadPost);
+    // =======================================
+    // FIREBASE FETCH FOR BLOGS
+    // =======================================
+    async function loadLiveBlogs() {
+        const grid = document.getElementById('blogGrid');
+        if (!grid) return;
+        
+        try {
+            if (!window.styvikDb) return; 
+            
+            const snapshot = await window.styvikDb.collection('blogs').orderBy('createdAt', 'desc').limit(20).get();
+
+            if (snapshot.empty) {
+                grid.innerHTML = `<div class="funny-error">
+                                    <span style="font-size: 3rem;">📝</span>
+                                    <h3>Page Blank!</h3>
+                                    <p>Our writers are currently brewing coffee and brainstorming new trends. Check back soon!</p>
+                                  </div>`;
+                return;
+            }
+
+            let blogs = [];
+            snapshot.forEach(doc => { 
+                const data = doc.data();
+                if(data.status === 'published' || !data.status) { 
+                    blogs.push({ id: doc.id, ...data }); 
+                }
+            });
+
+            renderBlogGrid(blogs);
+
+        } catch (error) {
+            console.error("Firebase Blog Fetch Error:", error);
+            grid.innerHTML = `<div class="funny-error">
+                                <span style="font-size: 3rem;">👗</span>
+                                <h3>Fashionably Late!</h3>
+                                <p>Our database is currently picking out its outfit for the day. Try refreshing in a minute!</p>
+                                <button class="retry-btn" onclick="location.reload()">Refresh Page</button>
+                              </div>`;
+        }
+    }
+
+    function renderBlogGrid(blogs) {
+        const grid = document.getElementById('blogGrid');
+        if (!grid) return;
+        grid.innerHTML = '';
+
+        blogs.forEach((blog, index) => {
+            const imgUrl = (blog.images && blog.images.length > 0) ? blog.images[0] : (blog.coverImage || 'images/placeholder.jpg');
+            let dateStr = 'Recently';
+            if (blog.createdAt && typeof blog.createdAt.toMillis === 'function') {
+                dateStr = new Date(blog.createdAt.toMillis()).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+            }
+            
+            const card = document.createElement('a');
+            card.href = `blog-post.html?id=${blog.id}`; 
+            card.className = 'blog-card';
+            card.style.animationDelay = `${index * 0.1}s`;
+            
+            card.innerHTML = `
+                <img src="${imgUrl}" alt="${blog.title}" class="blog-image" loading="lazy">
+                <div class="blog-content">
+                    <div class="blog-meta">
+                        <span class="blog-category">${blog.category || 'Editorial'}</span>
+                        <span>${dateStr}</span>
+                    </div>
+                    <h3 class="blog-card-title">${blog.title || 'Untitled Article'}</h3>
+                    <p class="blog-excerpt">${blog.excerpt || blog.description || 'Click to read the full article and discover the latest trends and stories inside Styvik.'}</p>
+                    <div class="read-more-btn">Read Article</div>
+                </div>
+            `;
+            grid.appendChild(card);
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        let dbCheckCount = 0;
+        const dbCheck = setInterval(() => {
+            if (window.styvikDb) {
+                clearInterval(dbCheck);
+                loadLiveBlogs();
+            } else if (dbCheckCount > 50) { 
+                clearInterval(dbCheck);
+                const grid = document.getElementById('blogGrid');
+                if (grid) {
+                    grid.innerHTML = `<div class="funny-error">
+                                        <span style="font-size: 3rem;">☕</span>
+                                        <h3>Oops! Spilled Coffee on the Servers!</h3>
+                                        <p>The tech interns are cleaning it up. Please check back later!</p>
+                                        <button class="retry-btn" onclick="location.reload()">Try Again</button>
+                                      </div>`;
+                }
+            }
+            dbCheckCount++;
+        }, 100);
+    });
   </script>
 </body>
 </html>
