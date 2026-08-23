@@ -93,8 +93,8 @@
 
   <header class="top-header">
     <div class="header-inner">
-      <!-- FIXED BACK NAVIGATION -->
-      <a href="javascript:void(0)" onclick="goBackOrHome()" class="back-btn" aria-label="Go Back">
+      <!-- HARDCODED DIRECT HOME/BLOG ROOT TARGET -->
+      <a href="https://styvik.in/" class="back-btn" aria-label="Go Back">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
         <img src="images/logo.png" alt="Styvik" class="site-logo">
       </a>
@@ -110,7 +110,6 @@
 
   <main class="container">
     <div id="articleContainer">
-      <!-- Loading Skeleton -->
       <div class="skeleton-box" style="width: 100%; height: 380px; margin-top: 20px; border-radius: 20px;"></div>
       <div class="skeleton-box" style="width: 140px; height: 26px; margin: 24px 0 16px 0; border-radius: 99px;"></div>
       <div class="skeleton-box" style="width: 90%; height: 48px; margin-bottom: 24px;"></div>
@@ -122,15 +121,6 @@
   <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore-compat.js"></script>
 
   <script>
-    // SMART BACK BUTTON: Goes back in history if available, else falls back to index.html
-    function goBackOrHome() {
-      if (window.history.length > 1 && document.referrer && document.referrer.includes(window.location.host)) {
-        window.history.back();
-      } else {
-        window.location.href = 'index.html';
-      }
-    }
-
     const firebaseConfig = {
       apiKey: "AIzaSyCBGOFSfFbk8oVC7LMLql7VkkwrfVXjJQ4",
       authDomain: "styvik-4.firebaseapp.com",
