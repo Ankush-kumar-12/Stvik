@@ -73,19 +73,13 @@
        HEADER (SEARCH & LOGO ONLY)
        ========================================= */
     .top-header { position: fixed; top: 0; left: 0; right: 0; height: 70px; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(12px); border-bottom: var(--border-width) solid var(--border-dark); z-index: 1001; display: flex; align-items: center; transition: top 0.3s ease; }
-    .header-inner { display: flex; justify-content: space-between; align-items: center; width: 100%; height: 100%; max-width: 1240px; margin: 0 auto; padding: 0 20px; gap: 16px; }
+    .header-inner { display: flex; justify-content: flex-start; align-items: center; width: 100%; height: 100%; max-width: 1240px; margin: 0 auto; padding: 0 20px; gap: 16px; }
     .header-left { display: flex; align-items: center; gap: 12px; }
     .back-btn-header { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%; border: var(--border-width) solid var(--border-dark); background: var(--surface); color: var(--text); transition: var(--transition-fast); }
     .back-btn-header:hover { background: var(--bg); color: var(--primary); transform: translateX(-2px); }
     .back-btn-header svg { width: 20px; height: 20px; stroke-width: 2.5; }
-    .site-logo { height: 22px; width: auto; display: block; transition: var(--transition-fast); }
-    .site-logo:hover { opacity: 0.8; }
-    
-    .search-bar-desktop { flex: 1; max-width: 600px; display: flex; align-items: center; justify-content: flex-end;}
-    .search-input-wrapper { position: relative; width: 100%; max-width: 400px; }
-    .search-bar-input { width: 100%; padding: 10px 16px 10px 42px; border: var(--border-width) solid var(--border-dark); border-radius: var(--radius-full); font-family: var(--font-main); font-size: 0.95rem; font-weight: 500; background: var(--bg); transition: var(--transition-fast); outline: none; }
-    .search-bar-input:focus { border-color: var(--primary); background: var(--surface); }
-    .search-bar-icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); width: 18px; color: var(--text); stroke-width: 2; pointer-events: none;}
+    .site-logo { height: 44px; width: auto; display: block; transition: var(--transition-fast); object-fit: contain; }
+    .site-logo:hover { opacity: 0.85; transform: scale(1.02); }
     
     /* =========================================
        GLOBAL ANIMATIONS
@@ -163,10 +157,35 @@
     .social-btn.tg:hover { background: #229ED9; border-color: #229ED9; }
     .footer-bottom { border-top: var(--border-width) dashed var(--border-dark); padding-top: 20px; text-align: center; font-weight: 600; font-size: 0.8rem; color: var(--text-secondary); }
 
+
+    /* EDITORIAL ARTICLE SYSTEM */
+    :root{--paper:#f7f4ee;--ink:#151515;--muted:#77736c;--hair:#d8d3ca;--soft:#e9e5dd;}
+    body{background:var(--paper);color:var(--ink);padding-top:0;}
+    .top-header{position:relative;height:92px;background:transparent;border-bottom:1px solid var(--hair);backdrop-filter:none;}
+    .header-inner{max-width:1400px;padding:0 46px;}
+    .site-wordmark{font-family:Inter,sans-serif;font-size:31px;font-weight:900;letter-spacing:-.065em;color:var(--ink);display:inline-block;line-height:1;}
+    .article-container{max-width:1400px;margin:0 auto;padding:70px 46px 100px;}
+    .article-hero{display:grid;grid-template-columns:.86fr 1.14fr;min-height:570px;border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);}
+    .article-hero-copy{padding:58px 80px 52px 0;display:flex;flex-direction:column;justify-content:center;}
+    .article-eyebrow{font-size:11px;font-weight:800;letter-spacing:.17em;text-transform:uppercase;color:var(--muted);margin-bottom:24px;}
+    .article-title{font-family:var(--font-serif);font-size:clamp(52px,6vw,92px);font-weight:500;line-height:.92;letter-spacing:-.06em;color:var(--ink);margin:0 0 28px;max-width:720px;}
+    .article-dek{font-size:16px;line-height:1.72;color:var(--muted);max-width:620px;margin:0 0 34px;}
+    .article-author-row{border:0;border-top:1px solid var(--hair);padding:18px 0 0;margin:0;gap:12px;}
+    .author-avatar{width:38px;height:38px;border:1px solid var(--ink);background:var(--ink);font-size:12px;}
+    .author-name{font-size:12px;letter-spacing:.08em;text-transform:uppercase}.author-role{font-size:11px;color:var(--muted)}
+    .article-hero-media{min-height:570px;background:#ddd8d0;overflow:hidden;position:relative;}
+    .article-hero-media img{width:100%;height:100%;object-fit:cover;display:block;filter:saturate(.9);}
+    .article-no-image{height:100%;min-height:570px;display:flex;align-items:center;justify-content:center;background:linear-gradient(145deg,#e6e1d9,#d5d0c8);color:#8b867e;font-size:10px;letter-spacing:.22em;font-weight:800;}
+    .article-lower{display:grid;grid-template-columns:minmax(0,760px) 260px;gap:90px;align-items:start;margin-top:86px;padding-left:70px;}
+    .article-body{font-size:18px;line-height:1.9;color:#292725;padding:0;max-width:760px;}
+    .article-body p{margin:0 0 28px}.article-body h2{font-family:var(--font-serif);font-size:42px;line-height:1.03;font-weight:500;letter-spacing:-.04em;color:var(--ink);margin:66px 0 22px}.article-body h3{font-size:18px;letter-spacing:.02em;margin:42px 0 15px;color:var(--ink)}
+    .article-body em{color:inherit}.article-body a{color:var(--ink);text-decoration:underline;text-underline-offset:3px}.article-body blockquote{border-left:2px solid var(--ink);padding:4px 0 4px 24px;margin:42px 0;font-family:var(--font-serif);font-size:25px;line-height:1.35;color:#4d4943}.article-body ul,.article-body ol{margin-bottom:28px}.article-body li{margin-bottom:10px}.article-body img{max-width:100%;height:auto;border-radius:0;margin:20px 0 36px;display:block;}
+    .article-sidebar{position:sticky;top:30px;border-top:1px solid var(--ink);padding-top:18px}.side-label{font-size:10px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:18px}.side-value{font-size:12px;line-height:1.7;margin-bottom:24px}.side-back{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;border-bottom:1px solid var(--ink);padding-bottom:8px}.side-back svg{width:14px}
+    .article-loading{padding-top:0}.loading-hero{display:grid;grid-template-columns:.86fr 1.14fr;min-height:570px;border-top:1px solid var(--ink);border-bottom:1px solid var(--ink)}.loading-copy{padding:58px 80px 52px 0;display:flex;flex-direction:column;justify-content:center}.loading-copy span{height:11px;width:150px;border-radius:99px;background:linear-gradient(90deg,#e4dfd7 25%,#f0ece6 50%,#e4dfd7 75%);background-size:200% 100%;animation:shimmer 1.4s infinite linear;margin:8px 0}.loading-copy span:nth-child(2){height:75px;width:85%;border-radius:6px}.loading-copy span:nth-child(3){width:88%}.loading-copy span:nth-child(4){width:56%}.loading-image{background:linear-gradient(90deg,#e2ddd5 25%,#eee9e2 50%,#e2ddd5 75%);background-size:200% 100%;animation:shimmer 1.4s infinite linear}.loading-body{max-width:760px;margin:86px 0 0 70px}.loading-body span{display:block;height:13px;width:100%;margin:13px 0;border-radius:99px;background:linear-gradient(90deg,#e4dfd7 25%,#f0ece6 50%,#e4dfd7 75%);background-size:200% 100%;animation:shimmer 1.4s infinite linear}.loading-body span:nth-child(3){width:76%}.loading-body span:nth-child(5){width:54%}@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+    .footer{border-top:1px solid var(--ink);background:transparent;margin-top:0;padding:50px 0 24px}.footer-wordmark{margin-bottom:12px}.footer .container{max-width:1400px;padding:0 46px}.footer-col-title{font-size:10px;letter-spacing:.15em}.footer-links a{font-size:12px}.newsletter-input{background:transparent;border:0;border-bottom:1px solid var(--ink);border-radius:0}.newsletter-btn{background:var(--ink);border-radius:0}
+    @media(max-width:900px){.header-inner,.footer .container{padding-left:20px;padding-right:20px}.top-header{height:72px}.site-wordmark{font-size:26px}.site-logo{height:34px}.article-container{padding:48px 20px 70px}.article-hero{grid-template-columns:1fr;min-height:0}.article-hero-copy{padding:34px 0 38px}.article-title{font-size:62px}.article-hero-media{min-height:320px}.article-no-image{min-height:320px}.article-lower{grid-template-columns:1fr;padding-left:0;gap:50px;margin-top:55px}.article-sidebar{position:static;order:-1}.article-body{font-size:17px}.article-body h2{font-size:35px}.loading-hero{grid-template-columns:1fr;min-height:0}.loading-copy{padding:34px 0 38px;min-height:300px}.loading-image{min-height:320px}.loading-body{margin:55px 0 0}.footer-grid{grid-template-columns:1fr;gap:28px}}
     @media(max-width: 900px) {
       .top-header { height: 65px; border-radius: 0; }
-      .search-bar-desktop { display: flex; width: 100%; justify-content: flex-end;}
-      .search-input-wrapper { max-width: 100%; }
       .article-title { font-size: 2.6rem; }
       .footer-grid { grid-template-columns: 1fr; gap: 32px; }
       .funny-error span { font-size: 3rem; }
@@ -344,14 +363,7 @@
         <a href="index.html" class="back-btn-header" title="Back to Blogs">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
         </a>
-        <a href="index.html"><img src="images/logo.png" alt="Styvik" class="site-logo"></a>
-      </div>
-      
-      <div class="search-bar-desktop">
-        <div class="search-input-wrapper">
-          <svg class="search-bar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-          <input type="text" class="search-bar-input" id="desktopSearchInput" placeholder="Search brands, styles, pieces..." autocomplete="off">
-        </div>
+        <a href="index.html" aria-label="Styvik"><img src="images/logo.png" alt="Styvik" class="site-logo"></a>
       </div>
     </div>
   </header>
@@ -362,14 +374,9 @@
   <main class="article-container" id="articleRenderArea">
       
       <!-- Initial Loading Skeleton -->
-      <div id="articleSkeleton" class="animate-fade-up">
-          <div class="skeleton-box" style="height: 350px; width: 100%; border-radius: 24px; margin-bottom: 30px;"></div>
-          <div class="skeleton-box" style="height: 20px; width: 200px; margin-bottom: 20px;"></div>
-          <div class="skeleton-box" style="height: 60px; width: 90%; margin-bottom: 40px;"></div>
-          <div class="skeleton-box" style="height: 40px; width: 250px; border-radius: 99px; margin-bottom: 40px;"></div>
-          <div class="skeleton-box" style="height: 20px; width: 100%; margin-bottom: 12px;"></div>
-          <div class="skeleton-box" style="height: 20px; width: 100%; margin-bottom: 12px;"></div>
-          <div class="skeleton-box" style="height: 20px; width: 80%; margin-bottom: 12px;"></div>
+      <div id="articleSkeleton" class="article-loading">
+        <div class="loading-hero"><div class="loading-copy"><span></span><span></span><span></span><span></span></div><div class="loading-image"></div></div>
+        <div class="loading-body"><span></span><span></span><span></span><span></span><span></span></div>
       </div>
 
   </main>
@@ -381,7 +388,7 @@
     <div class="container">
       <div class="footer-grid">
         <div>
-          <img src="images/logo.png" alt="Styvik" class="site-logo" style="margin-bottom: 12px;">
+          <span class="site-wordmark footer-wordmark">STYVIK</span>
           <p style="color: var(--text-secondary); font-weight: 500; font-size: 0.9rem;">Curating India's premier independent fashion brands into one structured directory.</p>
           <form class="newsletter-form" id="newsletterForm">
               <input type="email" class="newsletter-input" placeholder="Enter your email" required>
@@ -510,6 +517,8 @@
     // ARTICLE FETCHING & MARKDOWN PARSER
     // =======================================
     
+    const escapeHtml = (value) => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
     // Simple custom markdown parser for the blog body
     function parseBlogMarkdown(text) {
         if(!text) return "";
@@ -555,7 +564,7 @@
                                     <span style="font-size: 3rem;">🕵️</span>
                                     <h3>Missing ID!</h3>
                                     <p>Looks like you wandered off the runway. We couldn't find the article ID.</p>
-                                    <a href="blogs-styvik.html" class="retry-btn">Back to Journal</a>
+                                    <a href="index.html" class="retry-btn">Back to Journal</a>
                                   </div>`;
             return;
         }
@@ -568,7 +577,7 @@
                                         <span style="font-size: 3rem;">👻</span>
                                         <h3>Ghost Article!</h3>
                                         <p>This article has vanished into thin air (or was deleted by the author).</p>
-                                        <a href="blogs-styvik.html" class="retry-btn">Back to Journal</a>
+                                        <a href="index.html" class="retry-btn">Back to Journal</a>
                                       </div>`;
                 return;
             }
@@ -585,30 +594,30 @@
             const parsedBody = parseBlogMarkdown(blog.content);
 
             container.innerHTML = `
-                <div class="animate-fade-up">
-                    <div class="article-cover-wrap">
-                        <img src="${imgUrl}" class="article-cover" alt="Cover Image">
-                    </div>
-                    
-                    <div class="article-meta">
-                        <span class="article-category">${blog.category || 'Editorial'}</span>
-                        <span>${dateStr}</span>
-                    </div>
-
-                    <h1 class="article-title">${blog.title || 'Untitled Article'}</h1>
-
+              <article class="article-page animate-fade-up">
+                <section class="article-hero">
+                  <div class="article-hero-copy">
+                    <div class="article-eyebrow">${escapeHtml(blog.category || 'Editorial')} / ${dateStr}</div>
+                    <h1 class="article-title">${escapeHtml(blog.title || 'Untitled Article')}</h1>
+                    ${blog.excerpt ? `<p class="article-dek">${escapeHtml(blog.excerpt)}</p>` : ''}
                     <div class="article-author-row">
-                        <div class="author-avatar">${(blog.author || 'S').charAt(0).toUpperCase()}</div>
-                        <div class="author-info">
-                            <span class="author-name">${blog.author || 'Styvik Team'}</span>
-                            <span class="author-role">Fashion Editor</span>
-                        </div>
+                      <div class="author-avatar">${escapeHtml((blog.author || 'S').charAt(0).toUpperCase())}</div>
+                      <div class="author-info"><span class="author-name">${escapeHtml(blog.author || 'Styvik Team')}</span><span class="author-role">Fashion Editor · Styvik Journal</span></div>
                     </div>
-
-                    <div class="article-body">
-                        ${parsedBody}
-                    </div>
-                </div>
+                  </div>
+                  <div class="article-hero-media">${imgUrl ? `<img src="${escapeHtml(imgUrl)}" alt="${escapeHtml(blog.title || 'Cover image')}" loading="eager">` : '<div class="article-no-image">STYVIK JOURNAL</div>'}</div>
+                </section>
+                <section class="article-lower">
+                  <div class="article-body">${parsedBody}</div>
+                  <aside class="article-sidebar">
+                    <div class="side-label">Journal note</div>
+                    <div class="side-value">Independent fashion stories, discoveries and ideas curated by Styvik.</div>
+                    <div class="side-label">Published</div>
+                    <div class="side-value">${dateStr}</div>
+                    <a class="side-back" href="index.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M19 12H5M12 19l-7-7 7-7"/></svg> Back to journal</a>
+                  </aside>
+                </section>
+              </article>
             `;
 
             // Inform Soya about the article context
@@ -637,7 +646,7 @@
                                                                             <span style="font-size: 3rem;">☕</span>
                                                                             <h3>Coffee Spill!</h3>
                                                                             <p>Database connection failed. Please check back later.</p>
-                                                                            <a href="blogs-styvik.html" class="retry-btn">Back to Journal</a>
+                                                                            <a href="index.html" class="retry-btn">Back to Journal</a>
                                                                           </div>`;
             }
             dbCheckCount++;
